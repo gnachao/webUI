@@ -862,86 +862,86 @@
            - opt.text -> option title or value string
            - opt.index -> index number of an option
       */
-      getArray: function(sel, filter, textOnly){
-        var arr = [];
-        if(!!sel && !!filter){
-           sel = gjs.get(sel)[0];
-           if(!textOnly)
-              textOnly = false;
+      // getArray: function(sel, filter, textOnly){
+      //   var arr = [];
+      //   if(!!sel && !!filter){
+      //      sel = gjs.get(sel)[0];
+      //      if(!textOnly)
+      //         textOnly = false;
 
-           if(filter === '.' || filter === '*' || filter.toLowerCase() === 'all')
-           {//use 1
-              if(textOnly)
-                 for(var i=0; i<sel.options.length; i++)
-                    arr.push(sel[i].value)
-              else
-                 for(var i=0; i<sel.options.length; i++)
-                    arr.push(sel[i]);
-           }
-           else if(filter.toLowerCase() === 's')
-           {//use 2
-              if(textOnly){
-                 for(var i=0; i<sel.options.length; i++){
-                    if(gjs.attr(sel[i],'ticked') === '1')
-                       arr.push(sel[i].value)
-                 }
-              }
-              else{
-                 for(var i=0; i<sel.options.length; i++){
-                    if(gjs.attr(sel[i],'ticked') === '1')
-                       arr.push(sel[i])
-                 }
-              }
-           }
-           else if(filter.toLowerCase() === 'g')
-           {//use 3
-              var optgroups = gjs.get(sel,'tag:optgroup');
-              if(textOnly)
-                 for(var i=0; i<optgroups.length; i++)
-                    arr.push(optgroups[i].label)
-              else 
-                 return optgroups;
-           }
-           else if(filter.toLowerCase().split(':')[0]==='g' && gjs.inArray(filter.split(':')[1],gjs.Select.getArray(sel,'g',true),true) > -1)
-           {//use 4
-              var optgs = gjs.Select.getArray(sel, 'g'), optg;
-              if(textOnly){
-                 for(var i=0; i<optgs.length; i++){
-                    if(optgs[i].label.toLowerCase() === filter.split(':')[1].toLowerCase()){
-                       optg = optgs[i];
-                       var opts = gjs.get(optg, 'tag:option');
-                       for(var j=0; j<opts.length; j++)
-                          arr.push(opts[j].value);
-                       break;
-                    }
-                 }
-              }
-              else{
-                 for(var i=0; i<optgs.length; i++){
-                    if(optgs[i].label.toLowerCase() === filter.split(':')[1].toLowerCase()){
-                       optg = optgs[i]
-                       return gjs.get(optg, 'tag:option');
-                    }
-                 }  
-              }
-           }
-           else if(filter.toLowerCase().split(':')[0]==='sg' && gjs.inArray(filter.split(':')[1],gjs.Select.getArray(sel,'g',true),true) > -1)
-           {//use 5
-              var opts = gjs.Select.getArray(sel,'g:'+filter.split(':')[1]);
-              if(textOnly){
-                 for(var i=0; i<opts.length; i++)
-                    if(opts[i].getAttribute('ticked')==='1')
-                       arr.push(opts[i].value)
-              }
-              else{
-                 for(var i=0; i<opts.length; i++)
-                    if(opts[i].getAttribute('ticked')==='1')
-                       arr.push(opts[i])
-              }
-           }
-        }
-        return arr;
-      }
+      //      if(filter === '.' || filter === '*' || filter.toLowerCase() === 'all')
+      //      {//use 1
+      //         if(textOnly)
+      //            for(var i=0; i<sel.options.length; i++)
+      //               arr.push(sel[i].value)
+      //         else
+      //            for(var i=0; i<sel.options.length; i++)
+      //               arr.push(sel[i]);
+      //      }
+      //      else if(filter.toLowerCase() === 's')
+      //      {//use 2
+      //         if(textOnly){
+      //            for(var i=0; i<sel.options.length; i++){
+      //               if(gjs.attr(sel[i],'ticked') === '1')
+      //                  arr.push(sel[i].value)
+      //            }
+      //         }
+      //         else{
+      //            for(var i=0; i<sel.options.length; i++){
+      //               if(gjs.attr(sel[i],'ticked') === '1')
+      //                  arr.push(sel[i])
+      //            }
+      //         }
+      //      }
+      //      else if(filter.toLowerCase() === 'g')
+      //      {//use 3
+      //         var optgroups = gjs.get(sel,'tag:optgroup');
+      //         if(textOnly)
+      //            for(var i=0; i<optgroups.length; i++)
+      //               arr.push(optgroups[i].label)
+      //         else 
+      //            return optgroups;
+      //      }
+      //      else if(filter.toLowerCase().split(':')[0]==='g' && gjs.inArray(filter.split(':')[1],gjs.Select.getArray(sel,'g',true),true) > -1)
+      //      {//use 4
+      //         var optgs = gjs.Select.getArray(sel, 'g'), optg;
+      //         if(textOnly){
+      //            for(var i=0; i<optgs.length; i++){
+      //               if(optgs[i].label.toLowerCase() === filter.split(':')[1].toLowerCase()){
+      //                  optg = optgs[i];
+      //                  var opts = gjs.get(optg, 'tag:option');
+      //                  for(var j=0; j<opts.length; j++)
+      //                     arr.push(opts[j].value);
+      //                  break;
+      //               }
+      //            }
+      //         }
+      //         else{
+      //            for(var i=0; i<optgs.length; i++){
+      //               if(optgs[i].label.toLowerCase() === filter.split(':')[1].toLowerCase()){
+      //                  optg = optgs[i]
+      //                  return gjs.get(optg, 'tag:option');
+      //               }
+      //            }  
+      //         }
+      //      }
+      //      else if(filter.toLowerCase().split(':')[0]==='sg' && gjs.inArray(filter.split(':')[1],gjs.Select.getArray(sel,'g',true),true) > -1)
+      //      {//use 5
+      //         var opts = gjs.Select.getArray(sel,'g:'+filter.split(':')[1]);
+      //         if(textOnly){
+      //            for(var i=0; i<opts.length; i++)
+      //               if(opts[i].getAttribute('ticked')==='1')
+      //                  arr.push(opts[i].value)
+      //         }
+      //         else{
+      //            for(var i=0; i<opts.length; i++)
+      //               if(opts[i].getAttribute('ticked')==='1')
+      //                  arr.push(opts[i])
+      //         }
+      //      }
+      //   }
+      //   return arr;
+      // }
 
       // reveal modules
       return {
